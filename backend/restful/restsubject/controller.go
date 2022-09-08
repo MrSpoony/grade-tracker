@@ -12,10 +12,10 @@ import (
 )
 
 func (h *Handler) Handle() {
-	h.Router.Handle("/api/subjects", http.HandlerFunc(h.addSubject)).Methods("POST")
-	h.Router.Handle("/api/subjects/{id}", http.HandlerFunc(h.getSubject)).Methods("GET")
-	h.Router.Handle("/api/subjects/{id}", http.HandlerFunc(h.updateSubject)).Methods("PUT")
-	h.Router.Handle("/api/subjects/{id}", http.HandlerFunc(h.deleteSubject)).Methods("DELETE")
+	h.Router.Handle("/api/subject", http.HandlerFunc(h.addSubject)).Methods("POST")
+	h.Router.Handle("/api/subject/{id}", http.HandlerFunc(h.getSubject)).Methods("GET")
+	h.Router.Handle("/api/subject/{id}", http.HandlerFunc(h.updateSubject)).Methods("PUT")
+	h.Router.Handle("/api/subject/{id}", http.HandlerFunc(h.deleteSubject)).Methods("DELETE")
 }
 
 func (h *Handler) addSubject(w http.ResponseWriter, r *http.Request) {
