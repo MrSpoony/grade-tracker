@@ -1,6 +1,6 @@
 package subject
 
 type Subject struct {
-	ID      int
-	Subject string
+	ID      int    `json:"id"`
+	Subject string `json:"subject"`
 }

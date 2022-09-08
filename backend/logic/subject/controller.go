@@ -18,3 +18,34 @@ WHERE id = ?
 	}
 	return &s, nil
 }
+
+func CreateSubject(db *db.DB, subject Subject) error {
+	q := `
+INSERT INTO tabSubject (subject) VALUES
+(?)
+-- sql
+`
+	_, err := db.Query(q, subject.Subject)
+	return err
+}
+
+func UpdateSubject(db *db.DB, subject Subject) error {
+	q := `
+UPDATE tabSubject
+SET subject = ? 
+WHERE id = ?
+-- sql
+`
+	_, err := db.Query(q, subject.Subject, subject.ID)
+	return err
+}
+
+func DeleteSubjectByID(db *db.DB, id int) error {
+	q := `
+DELETE FROM tabSubject
+WHERE id = ?
+--sql
+	`
+	_, err := db.Query(q, id)
+	return err
+}
