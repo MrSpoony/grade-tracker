@@ -49,3 +49,20 @@ WHERE id = ?
 	_, err := db.Query(q, id)
 	return err
 }
+
+func GetAllSubjects(db *db.DB) (*[]Subject, error) {
+	q := `
+SELECT id, subject FROM tabSubject
+	`
+	rows, err := db.Query(q)
+	if err != nil {
+		return nil, err
+	}
+	subjects := []Subject{}
+	for rows.Next() {
+		subject := Subject{}
+		rows.Scan(subject.ID, subject.Subject)
+		subjects = append(subjects, subject)
+	}
+	return &subjects, nil
+}
