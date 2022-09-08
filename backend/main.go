@@ -8,6 +8,7 @@ import (
 
 	"github.com/MrSpoony/grade-tracker/backend/db"
 	"github.com/MrSpoony/grade-tracker/backend/restful/restauth"
+	"github.com/MrSpoony/grade-tracker/backend/restful/restsubject"
 	"github.com/MrSpoony/grade-tracker/backend/server"
 )
 
@@ -45,6 +46,9 @@ func main() {
 
 	auth := restauth.NewHandler(srv)
 	auth.Handle()
+
+	subject := restsubject.NewHandler(srv)
+	subject.Handle()
 
 	if err = srv.Run(); err != nil {
 		panic(err.Error())

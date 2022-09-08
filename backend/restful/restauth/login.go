@@ -10,6 +10,7 @@ import (
 	"golang.org/x/crypto/bcrypt"
 
 	"github.com/MrSpoony/grade-tracker/backend/cookie"
+	"github.com/MrSpoony/grade-tracker/backend/logic/user"
 )
 
 func (h *Handler) login(w http.ResponseWriter, r *http.Request) {
@@ -26,7 +27,7 @@ func (h *Handler) login(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Get correct user
-	user, err := h.srv.DB.GetUserByUsername(creds.Username)
+	user, err := user.GetUserByUsername(h.DB, creds.Username)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
 		fmt.Fprintf(w, "{\"message\": \"%s\" }", err.Error())

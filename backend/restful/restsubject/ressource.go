@@ -1,4 +1,4 @@
-package restauth
+package restsubject
 
 import (
 	"github.com/gorilla/mux"
@@ -17,9 +17,4 @@ type Handler struct {
 func NewHandler(srv *server.Server) (h *Handler) {
 	h = &Handler{srv.DB, srv.Router}
 	return
-}
-
-type credentials struct {
-	Username string `json:"username"`
-	Password string `json:"password"`
 }
