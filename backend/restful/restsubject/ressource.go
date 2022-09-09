@@ -16,5 +16,6 @@ type Handler struct {
 // NewHandler creates a new handler for auth
 func NewHandler(srv *server.Server) (h *Handler) {
 	h = &Handler{srv.DB, srv.Router}
+	h.Handle()
 	return
 }

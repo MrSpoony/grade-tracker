@@ -19,14 +19,32 @@ WHERE id = ?
 	return &s, nil
 }
 
-func CreateSubject(db *db.DB, subject Subject) error {
+func CreateSubject(db *db.DB, subject Subject) (int, error) {
 	q := `
 INSERT INTO tabSubject (subject) VALUES
-(?)
+(?);
+-- sql
+`
+	getID := `
+SELECT MAX(id) FROM tabSubject
 -- sql
 `
 	_, err := db.Query(q, subject.Subject)
-	return err
+	if err != nil {
+		return 0, err
+	}
+	row, err := db.Query(getID)
+	if err != nil {
+		return 0, err
+	}
+	var id int
+	for row.Next() {
+		err = row.Scan(&id)
+		if err != nil {
+			return 0, err
+		}
+	}
+	return id, nil
 }
 
 func UpdateSubject(db *db.DB, subject Subject) error {
@@ -43,14 +61,14 @@ WHERE id = ?
 func DeleteSubjectByID(db *db.DB, id int) error {
 	q := `
 DELETE FROM tabSubject
-WHERE id = ?
+WHERE id = ?;
 --sql
 	`
 	_, err := db.Query(q, id)
 	return err
 }
 
-func GetAllSubjects(db *db.DB) (*[]Subject, error) {
+func GetAllSubjects(db *db.DB) ([]Subject, error) {
 	q := `
 SELECT id, subject FROM tabSubject
 	`
@@ -61,8 +79,8 @@ SELECT id, subject FROM tabSubject
 	subjects := []Subject{}
 	for rows.Next() {
 		subject := Subject{}
-		rows.Scan(subject.ID, subject.Subject)
+		rows.Scan(&subject.ID, &subject.Subject)
 		subjects = append(subjects, subject)
 	}
-	return &subjects, nil
+	return subjects, nil
 }
