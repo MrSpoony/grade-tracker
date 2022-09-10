@@ -13,7 +13,7 @@ import (
 
 func (h *Handler) Handle() {
 	h.Router.Handle("/api/subject", http.HandlerFunc(h.add)).Methods("POST")
-	h.Router.Handle("/api/subject", http.HandlerFunc(h.get)).Methods("GET")
+	h.Router.Handle("/api/subject", http.HandlerFunc(h.getAll)).Methods("GET")
 	h.Router.Handle("/api/subject/{id}", http.HandlerFunc(h.get)).Methods("GET")
 	h.Router.Handle("/api/subject/{id}", http.HandlerFunc(h.update)).Methods("PUT")
 	h.Router.Handle("/api/subject/{id}", http.HandlerFunc(h.delete)).Methods("DELETE")
@@ -47,25 +47,25 @@ func (h *Handler) add(w http.ResponseWriter, r *http.Request) {
 	w.Write(out)
 }
 
-func (h *Handler) get(w http.ResponseWriter, r *http.Request) {
-	vars := mux.Vars(r)
-	strID, ok := vars["id"]
-	if !ok || strID == "" {
-		subjects, err := subject.GetAllSubjects(h.DB)
-		if err != nil {
-			w.WriteHeader(http.StatusBadRequest)
-			fmt.Fprintf(w, "{\"message\": \"%s\" }", err.Error())
-			return
-		}
-		out, err := json.Marshal(subjects)
-		if err != nil {
-			w.WriteHeader(http.StatusBadRequest)
-			fmt.Fprintf(w, "{\"message\": \"%s\" }", err.Error())
-			return
-		}
-		w.Write(out)
+func (h *Handler) getAll(w http.ResponseWriter, r *http.Request) {
+	subjects, err := subject.GetAllSubjects(h.DB)
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		fmt.Fprintf(w, "{\"message\": \"%s\" }", err.Error())
 		return
 	}
+	out, err := json.Marshal(subjects)
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		fmt.Fprintf(w, "{\"message\": \"%s\" }", err.Error())
+		return
+	}
+	w.Write(out)
+}
+
+func (h *Handler) get(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	strID := vars["id"]
 	id, err := strconv.Atoi(strID)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
