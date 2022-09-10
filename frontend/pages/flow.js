@@ -10,7 +10,7 @@ const defaultModel = {
 
 export default function () {
     const router = useRouter()
-    const user = useState(defaultModel)
+    const [user, setUser] = useState(defaultModel)
 
     const onClick = async () => {
         console.log(user[0])
@@ -18,8 +18,6 @@ export default function () {
             method: "POST",
             body: JSON.stringify(user),
         });
-        const data = await response.json();
-        return data;
     }
 
     return (
