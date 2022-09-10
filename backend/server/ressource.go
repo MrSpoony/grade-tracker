@@ -30,7 +30,7 @@ func setHeaders(next http.Handler) http.Handler {
 		// Backend always sends JSON
 		w.Header().Set("Content-Type", "application/json")
 		// No CORS problems
-		w.Header().Set("Access-Control-Allow-Origin", "http://localhost:*")
+		w.Header().Set("Access-Control-Allow-Origin", "*")
 		w.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
 		w.Header().Set("Access-Control-Allow-Headers",
 			"Accept, Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, enctype")
