@@ -27,7 +27,10 @@ func (s *Server) Run() error {
 
 func setHeaders(next http.Handler) http.Handler {
 	fn := func(w http.ResponseWriter, r *http.Request) {
+		// Backend always sends JSON
 		w.Header().Set("Content-Type", "application/json")
+		// No CORS problems
+		w.Header().Set("Access-Control-Allow-Origin", "*")
 		next.ServeHTTP(w, r)
 	}
 
