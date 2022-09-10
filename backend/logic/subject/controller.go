@@ -62,7 +62,7 @@ func DeleteSubjectByID(db *db.DB, id int) error {
 	q := `
 DELETE FROM tabSubject
 WHERE id = ?;
---sql
+-- sql
 	`
 	_, err := db.Query(q, id)
 	return err

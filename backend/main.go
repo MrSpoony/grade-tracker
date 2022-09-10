@@ -21,22 +21,6 @@ type User struct {
 }
 
 func main() {
-
-	// rows, err := db.Query("SELECT id, username, email FROM tabUser; -- sql")
-	// if err != nil {
-	// 	panic(err.Error())
-	// }
-	// defer rows.Close()
-	// users := make([]User, 0)
-	// for rows.Next() i
-	// 	var user User
-	// 	if err = rows.Scan(&user.ID, &user.Username, &user.Email); err != nil {
-	// 		panic(err.Error())
-	// 	}
-	// 	users = append(users, user)
-	// }
-	// fmt.Println(users)
-
 	mysqlDB, err := NewDB()
 	if err != nil {
 		panic(err.Error())
