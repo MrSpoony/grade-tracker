@@ -1,12 +1,25 @@
 import { useRouter } from 'next/router'
+import { useState } from 'react'
 
 import styles from "../styles/flow.module.css"
 
+const defaultModel = {
+    username: "mattia",
+    password: "test"
+}
+
 export default function () {
     const router = useRouter()
+    const user = useState(defaultModel)
 
-    const onClick = () => {
-        router.push('/')
+    const onClick = async () => {
+        console.log(user[0])
+        const response = await fetch("http://127.0.0.1:6969/api/login", {
+            method: "POST",
+            body: JSON.stringify(user),
+        });
+        const data = await response.json();
+        return data;
     }
 
     return (
