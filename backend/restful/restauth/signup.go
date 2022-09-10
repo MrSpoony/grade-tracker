@@ -15,9 +15,9 @@ func (h *Handler) signup(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusMethodNotAllowed)
 		return
 	}
-	var user user.User
+	var usr user.User
 	// Parse JSON input
-	err := json.NewDecoder(r.Body).Decode(&user)
+	err := json.NewDecoder(r.Body).Decode(&usr)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
 		fmt.Fprintf(w, "{\"message\": \"%s\" }", err.Error())
@@ -25,16 +25,16 @@ func (h *Handler) signup(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Hash password
-	pwd, err := bcrypt.GenerateFromPassword([]byte(user.Password), 10)
+	pwd, err := bcrypt.GenerateFromPassword([]byte(usr.Password), 10)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
 		fmt.Fprintf(w, "{\"message\": \"%s\" }", err.Error())
 		return
 	}
-	user.Password = string(pwd)
+	usr.Password = string(pwd)
 
 	// Store user
-	err = h.srv.DB.StoreNewUser(user)
+	err = user.StoreNewUser(h.DB, usr)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
 		fmt.Fprintf(w, "{\"message\": \"%s\" }", err.Error())

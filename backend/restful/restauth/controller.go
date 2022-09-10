@@ -1,7 +1,9 @@
 package restauth
 
+import "net/http"
+
 func (h *Handler) Handle() {
-	h.srv.Router.HandleFunc("/api/login", h.login)
-	h.srv.Router.HandleFunc("/api/signup", h.signup)
-	h.srv.Router.HandleFunc("/api/refresh", h.refresh)
+	h.Router.Handle("/api/login", http.HandlerFunc(h.login)).Methods("POST")
+	h.Router.Handle("/api/signup", http.HandlerFunc(h.signup)).Methods("POST")
+	h.Router.Handle("/api/refresh", http.HandlerFunc(h.refresh))
 }

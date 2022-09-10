@@ -1,6 +1,8 @@
 package server
 
 import (
+	"fmt"
+	"log"
 	"net/http"
 
 	"github.com/gorilla/mux"
@@ -19,5 +21,33 @@ func New(db *db.DB, router *mux.Router) *Server {
 
 func (s *Server) Run() error {
 	defer s.DB.Close()
+	s.Router.Use(recoverPanic, setHeaders)
 	return http.ListenAndServe(":6969", s.Router)
+}
+
+func setHeaders(next http.Handler) http.Handler {
+	fn := func(w http.ResponseWriter, r *http.Request) {
+		// Backend always sends JSON
+		w.Header().Set("Content-Type", "application/json")
+		// No CORS problems
+		w.Header().Set("Access-Control-Allow-Origin", "*")
+		next.ServeHTTP(w, r)
+	}
+
+	return http.HandlerFunc(fn)
+}
+
+func recoverPanic(next http.Handler) http.Handler {
+	fn := func(w http.ResponseWriter, r *http.Request) {
+		defer func() {
+			if r := recover(); r != nil {
+				log.Print(fmt.Errorf("panic: %+v", r))
+				http.Error(w, http.StatusText(http.StatusInternalServerError), http.StatusInternalServerError)
+			}
+		}()
+
+		next.ServeHTTP(w, r)
+	}
+
+	return http.HandlerFunc(fn)
 }

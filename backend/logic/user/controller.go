@@ -1,17 +1,17 @@
-package db
+package user
 
 import (
-	"github.com/MrSpoony/grade-tracker/backend/logic/user"
+	"github.com/MrSpoony/grade-tracker/backend/db"
 )
 
-func (db *DB) GetUserByUsername(username string) (*user.User, error) {
+func GetUserByUsername(db *db.DB, username string) (*User, error) {
 	q := `
 SELECT id, firstname, lastname, username, email, password FROM tabUser
 WHERE username = ?
 -- sql
 `
 	row := db.QueryRow(q, username)
-	u := user.User{}
+	u := User{}
 	err := row.Scan(&u.ID, &u.Firstname, &u.Lastname, &u.Username, &u.Email, &u.Password)
 	if err != nil {
 		return nil, err
@@ -19,7 +19,7 @@ WHERE username = ?
 	return &u, nil
 }
 
-func (db *DB) StoreNewUser(user user.User) error {
+func StoreNewUser(db *db.DB, user User) error {
 	q := `
 INSERT INTO tabUser (firstname, lastname, username, email, password) VALUES
 (?, ?, ?, ?, ?)
