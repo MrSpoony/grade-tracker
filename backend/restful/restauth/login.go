@@ -23,11 +23,12 @@ func (h *Handler) login(w http.ResponseWriter, r *http.Request) {
 	err := json.NewDecoder(r.Body).Decode(&creds)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
+		fmt.Fprintf(w, "{\"message\": \"%s\"}", "Could not decode JSON")
 		return
 	}
 
 	// Get correct user
-	user, err := user.GetUserByUsername(h.DB, creds.Username)
+	usr, err := user.GetUserByUsername(h.DB, creds.Username)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
 		fmt.Fprintf(w, "{\"message\": \"%s\" }", err.Error())
@@ -35,18 +36,21 @@ func (h *Handler) login(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Hash password
-	err = bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(creds.Password))
+	err = bcrypt.CompareHashAndPassword([]byte(usr.Password), []byte(creds.Password))
 	if err != nil {
 		w.WriteHeader(http.StatusUnauthorized)
 		w.Write([]byte("{\"message\": \"Wrong password\"}"))
+		return
 	}
 
 	// Declare the expiration time of the token
 	// here, we have kept it as 5 minutes
-	expirationTime := time.Now().Add(5 * time.Minute)
+	expirationTime := time.Now().Add(24 * time.Hour)
 	// Create the JWT claims, which includes the username and expiry time
 	claims := &cookie.Claims{
-		Username: creds.Username,
+		Data: cookie.Data{
+			User: *usr,
+		},
 		StandardClaims: jwt.StandardClaims{
 			// In JWT, the expiry time is expressed as unix milliseconds
 			ExpiresAt: expirationTime.Unix(),
@@ -65,9 +69,17 @@ func (h *Handler) login(w http.ResponseWriter, r *http.Request) {
 
 	// Finally, we set the client cookie for "token" as the JWT we just generated
 	// we also set an expiry time which is the same as the token itself
-	http.SetCookie(w, &http.Cookie{
-		Name:    "token",
-		Value:   tokenString,
-		Expires: expirationTime,
-	})
+	cookie := &http.Cookie{
+		Name:     "token",
+		Value:    tokenString,
+		Path:     "/",
+		HttpOnly: true,
+	}
+	http.SetCookie(w, cookie)
+	out, err := json.Marshal(cookie)
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+	w.Write(out)
 }
