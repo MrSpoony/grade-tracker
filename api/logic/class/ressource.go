@@ -1,6 +1,6 @@
 package class
 
-import "github.com/MrSpoony/grade-tracker/backend/logic/school"
+import "github.com/MrSpoony/grade-tracker/api/logic/school"
 
 type Class struct {
 	ID        int    `json:"id"`

@@ -1,8 +1,8 @@
 package cookie
 
 import (
-	"github.com/MrSpoony/grade-tracker/backend/logic/role"
-	"github.com/MrSpoony/grade-tracker/backend/logic/user"
+	"github.com/MrSpoony/grade-tracker/api/logic/role"
+	"github.com/MrSpoony/grade-tracker/api/logic/user"
 
 	"github.com/golang-jwt/jwt/v4"
 )

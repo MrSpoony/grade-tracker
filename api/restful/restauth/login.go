@@ -9,8 +9,8 @@ import (
 	"github.com/golang-jwt/jwt/v4"
 	"golang.org/x/crypto/bcrypt"
 
-	"github.com/MrSpoony/grade-tracker/backend/cookie"
-	"github.com/MrSpoony/grade-tracker/backend/logic/user"
+	"github.com/MrSpoony/grade-tracker/api/cookie"
+	"github.com/MrSpoony/grade-tracker/api/logic/user"
 )
 
 func (h *Handler) login(w http.ResponseWriter, r *http.Request) {

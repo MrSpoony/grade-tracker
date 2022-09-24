@@ -1,7 +1,7 @@
 package subject
 
 import (
-	"github.com/MrSpoony/grade-tracker/backend/db"
+	"github.com/MrSpoony/grade-tracker/api/db"
 )
 
 func GetSubjectByID(db *db.DB, id int) (*Subject, error) {

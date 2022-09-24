@@ -7,7 +7,7 @@ import (
 
 	"github.com/gorilla/mux"
 
-	"github.com/MrSpoony/grade-tracker/backend/db"
+	"github.com/MrSpoony/grade-tracker/api/db"
 )
 
 type Server struct {

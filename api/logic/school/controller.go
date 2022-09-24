@@ -1,6 +1,6 @@
 package school
 
-import "github.com/MrSpoony/grade-tracker/backend/db"
+import "github.com/MrSpoony/grade-tracker/api/db"
 
 func GetSchoolByID(db *db.DB, id int) (*School, error) {
 	q := `

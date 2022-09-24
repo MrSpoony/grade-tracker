@@ -3,8 +3,8 @@ package class
 import (
 	"errors"
 
-	"github.com/MrSpoony/grade-tracker/backend/db"
-	"github.com/MrSpoony/grade-tracker/backend/logic/school"
+	"github.com/MrSpoony/grade-tracker/api/db"
+	"github.com/MrSpoony/grade-tracker/api/logic/school"
 )
 
 func GetClassByID(db *db.DB, id int) (*Class, error) {

@@ -1,7 +1,7 @@
 package user
 
 import (
-	"github.com/MrSpoony/grade-tracker/backend/db"
+	"github.com/MrSpoony/grade-tracker/api/db"
 )
 
 func GetUserByUsername(db *db.DB, username string) (*User, error) {

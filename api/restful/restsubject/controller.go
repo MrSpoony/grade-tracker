@@ -8,7 +8,7 @@ import (
 
 	"github.com/gorilla/mux"
 
-	"github.com/MrSpoony/grade-tracker/backend/logic/subject"
+	"github.com/MrSpoony/grade-tracker/api/logic/subject"
 )
 
 func (h *Handler) Handle() {

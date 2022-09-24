@@ -1,4 +1,4 @@
-module github.com/MrSpoony/grade-tracker/backend
+module github.com/MrSpoony/grade-tracker/api
 
 go 1.19
 

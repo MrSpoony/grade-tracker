@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"github.com/MrSpoony/grade-tracker/backend/cookie"
+	"github.com/MrSpoony/grade-tracker/api/cookie"
 )
 
 func (h *Handler) me(w http.ResponseWriter, r *http.Request) {

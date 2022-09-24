@@ -1,10 +1,10 @@
-package restauth
+package restsubject
 
 import (
 	"github.com/gorilla/mux"
 
-	"github.com/MrSpoony/grade-tracker/backend/db"
-	"github.com/MrSpoony/grade-tracker/backend/server"
+	"github.com/MrSpoony/grade-tracker/api/db"
+	"github.com/MrSpoony/grade-tracker/api/server"
 )
 
 // Handler is a restful interface for business partner related endpoints.
@@ -18,9 +18,4 @@ func NewHandler(srv *server.Server) (h *Handler) {
 	h = &Handler{srv.DB, srv.Router}
 	h.Handle()
 	return
-}
-
-type credentials struct {
-	Username string `json:"username"`
-	Password string `json:"password"`
 }

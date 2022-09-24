@@ -7,7 +7,7 @@ import (
 
 	"golang.org/x/crypto/bcrypt"
 
-	"github.com/MrSpoony/grade-tracker/backend/logic/user"
+	"github.com/MrSpoony/grade-tracker/api/logic/user"
 )
 
 func (h *Handler) signup(w http.ResponseWriter, r *http.Request) {

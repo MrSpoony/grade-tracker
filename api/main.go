@@ -6,12 +6,10 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/gorilla/mux"
 
-	"github.com/MrSpoony/grade-tracker/backend/db"
-	"github.com/MrSpoony/grade-tracker/backend/restful/restauth"
-
-	//"github.com/MrSpoony/grade-tracker/backend/restful/restclass"
-	"github.com/MrSpoony/grade-tracker/backend/restful/restsubject"
-	"github.com/MrSpoony/grade-tracker/backend/server"
+	"github.com/MrSpoony/grade-tracker/api/db"
+	"github.com/MrSpoony/grade-tracker/api/restful/restauth"
+	"github.com/MrSpoony/grade-tracker/api/restful/restsubject"
+	"github.com/MrSpoony/grade-tracker/api/server"
 )
 
 type User struct {

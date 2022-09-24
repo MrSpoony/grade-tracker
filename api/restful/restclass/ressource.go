@@ -3,8 +3,8 @@ package restclass
 import (
 	"github.com/gorilla/mux"
 
-	"github.com/MrSpoony/grade-tracker/backend/db"
-	"github.com/MrSpoony/grade-tracker/backend/server"
+	"github.com/MrSpoony/grade-tracker/api/db"
+	"github.com/MrSpoony/grade-tracker/api/server"
 )
 
 // Handler is a restful interface for business partner related endpoints.
